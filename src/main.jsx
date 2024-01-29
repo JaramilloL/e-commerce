@@ -1,10 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
+import { RouterProvider } from 'react-router-dom'
+import { routes } from './routes/Routes'
+//se creara la conexion con las rutad de react-router-dom
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+  {/* el provider resive un parametro el cual es la definicipn de las rutas */}
+
+    <RouterProvider  router={routes} />
   </React.StrictMode>,
 )
