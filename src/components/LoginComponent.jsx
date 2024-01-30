@@ -13,7 +13,7 @@ import { UserContext } from "../context/UserContext";
 
 const LoginComponent = () => {
   //creamos el contexto de la app
-  const {signIn, isAuth} = useContext(UserContext)
+  const {signIn, isAuth, resetPassword} = useContext(UserContext)
 
   //creamos un navigate para reenviar al home
   const navigateUser = useNavigate();
@@ -23,6 +23,7 @@ const LoginComponent = () => {
     register,
     reset,
     formState: { errors },
+    getValues,
   } = useForm();
 
   const onSubmit = handleSubmit(async(data) => {
@@ -39,6 +40,19 @@ const LoginComponent = () => {
     console.log(data);
     reset();
   });
+
+  //?creamos una funcion la cual va a resetear el passsword mediante el email
+  const handleResetPassword = async()=>{
+    const getEmail = getValues('email');
+
+    try {
+      await resetPassword(getEmail)
+      toast.success('se ha enviado su nueva contrasena')
+    } catch (error) {
+      if(error.code === 'auth/missing-email')  toast.error('Ingrese un correo para enviar su nueva contrasena')
+    }
+
+  }
 
   //todo creamos un useeffect para la llamada de errores
   useEffect(() => {
@@ -89,6 +103,9 @@ const LoginComponent = () => {
         />
         <label htmlFor="floatingPassword">Password</label>
         {/* {toast.error(errors?.password?.message)} */}
+      </div>
+      <div className="d-flex justify-content-center align-items-center m-2">
+        <Link className="text-dark h5" onClick={handleResetPassword}>Forgot password?</Link>
       </div>
       <div className="d-flex justify-content-evenly align-items-center">
         <input
