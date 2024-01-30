@@ -1,3 +1,10 @@
 *{
   box-sizing: border-box;
 }
+.size-img{
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  margin-bottom: 2rem;
+}

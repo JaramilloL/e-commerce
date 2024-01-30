@@ -1,8 +1,100 @@
 //este componente manejara el registro del usuario
 
+//todo importamos la libreria de react form para las validaciones
+import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom';
+import Logo from '../assets/logo.jpg'
+import { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+
 const RegisterComponent = () => {
+  const { handleSubmit, register, reset, formState: { errors } } = useForm();
+  const onSubmit = handleSubmit((data) => {
+    console.log(data)
+    reset();
+  })
+
+  //todo creamos un effecto en el cual se mantendra al pendiente de los cambios en la entrada de valoes del input
+  useEffect(()=>{
+    if(errors.username){
+      toast.error(errors?.username?.message)
+    }
+    if(errors.email){
+      toast.error(errors?.email?.message)
+    }
+    if(errors.password){
+      toast.error(errors?.password?.message)
+    }
+  },[errors.email, errors.password, errors.username])
   return (
-    <div>RegisterComponent</div>
+    <form className="container m-auto w-50 mt-5" onSubmit={onSubmit}>
+    <div className=''>
+      <img className='size-img ' src={ Logo } alt="placeholder"/>
+    </div>
+    <div className="form-floating mb-3">
+        <input
+          type="text"
+          className="form-control"
+          id="floatingInputUser"
+          placeholder="name@example.com"
+          name='username'
+          {
+            ...register('username', { 
+              required: {
+                value: true,
+                message: 'User name is required'
+              }
+            })
+          }
+        />
+        <label htmlFor="floatingInputUser">User-Name</label>
+      </div>
+      {/* { errors?.username?.message } */}
+
+      <div className="form-floating mb-3">
+        <input
+          type="email"
+          className="form-control"
+          id="floatingInput"
+          placeholder="name@example.com"
+          name='email'
+          {
+            ...register('email', { 
+              required: {
+                value: true,
+                message: 'Email is required'
+              }
+            })
+          }
+        />
+        <label htmlFor="floatingInput">Email address</label>
+      </div>
+      {/* { errors?.email?.message } */}
+      <div className="form-floating">
+        <input
+          type="password"
+          className="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+          name='password'
+          {
+            ...register('password', { 
+              required: {
+                value: true,
+                message: 'Password is required'
+              }
+            })
+          }
+        />
+        <label htmlFor="floatingPassword">Password</label>
+      {/* { errors?.password?.message } */}
+      </div>
+      <div className="d-flex justify-content-evenly align-items-center">
+        <input className="btn btn-success mt-1 w-25" type="submit" value="Submite" />
+      <Link to={'/login'} className="btn btn-success mt-1 w-25">Login</Link>
+      </div>
+      <ToastContainer autoClose={2000}/>
+    </form>
   )
 }
 
