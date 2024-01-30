@@ -2,14 +2,22 @@
 
 //todo llamamos a useform para las validaciones y actualizaciones de datos de login
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
 //implementacion de las notificaciones de error
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const LoginComponent = () => {
+  //creamos el contexto de la app
+  const {signIn, isAuth} = useContext(UserContext)
+
+  //creamos un navigate para reenviar al home
+  const navigateUser = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -17,7 +25,17 @@ const LoginComponent = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async(data) => {
+    try {
+      await signIn(data.email, data.password)
+      isAuth()
+      navigateUser('/home')
+    } catch (error) {
+      if (error.code === "auth/invalid-credential")
+        toast.error("Usuario no registrado");
+      if (error.code === "auth/too-many-requests")
+        toast.error("Demasiados intentos");
+    }
     console.log(data);
     reset();
   });
