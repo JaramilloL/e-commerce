@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { UserContext } from './UserContext'
 import ReducerContext from './ReducerContext'
 import { useReducer } from 'react'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth } from '../firebase/firebaseConfig'
 //?el estado resive la propiedad childrem para compartir datos en toda la application
 
@@ -24,13 +24,19 @@ const StateContext = ( { children } ) => {
   const isAuth =()=> dispatch( { type: 'LOGIN' } )
   const notAuth =()=> dispatch( { type: 'LOGOUT' } )
 
+  //?creamos la funcion de cerrar sesion 
+  const logout = ()=> signOut(auth)
+
+  //?creamos la funcion de recuperacion de password
+  const resetPassword = (email)=> sendPasswordResetEmail(auth, email)
+
   //*useReducer lo usamos para la manipulacion del estado en el que se encuentra el logeo
   const [state, dispatch] = useReducer(ReducerContext, initialState)
 
   //todo lo que contenga la propiedad de value se compartira con toda la app
   return (
     <UserContext.Provider value={{
-      state, dispatch, registerUser, signIn, isAuth, notAuth
+      state, dispatch, registerUser, signIn, isAuth, notAuth, logout, resetPassword
     }}>
       { children }
     </UserContext.Provider>
