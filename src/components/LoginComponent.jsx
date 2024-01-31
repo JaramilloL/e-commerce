@@ -13,7 +13,7 @@ import { UserContext } from "../context/UserContext";
 
 const LoginComponent = () => {
   //creamos el contexto de la app
-  const {signIn, isAuth, resetPassword} = useContext(UserContext)
+  const { signIn, isAuth, resetPassword, signInWihtGoogle } = useContext(UserContext);
 
   //creamos un navigate para reenviar al home
   const navigateUser = useNavigate();
@@ -26,11 +26,11 @@ const LoginComponent = () => {
     getValues,
   } = useForm();
 
-  const onSubmit = handleSubmit(async(data) => {
+  const onSubmit = handleSubmit(async (data) => {
     try {
-      await signIn(data.email, data.password)
-      isAuth()
-      navigateUser('/home')
+      await signIn(data.email, data.password);
+      isAuth();
+      navigateUser("/home");
     } catch (error) {
       if (error.code === "auth/invalid-credential")
         toast.error("Usuario no registrado");
@@ -42,16 +42,27 @@ const LoginComponent = () => {
   });
 
   //?creamos una funcion la cual va a resetear el passsword mediante el email
-  const handleResetPassword = async()=>{
-    const getEmail = getValues('email');
+  const handleResetPassword = async () => {
+    const getEmail = getValues("email");
 
     try {
-      await resetPassword(getEmail)
-      toast.success('se ha enviado su nueva contrasena')
+      await resetPassword(getEmail);
+      toast.success("se ha enviado su nueva contrasena");
     } catch (error) {
-      if(error.code === 'auth/missing-email')  toast.error('Ingrese un correo para enviar su nueva contrasena')
+      if (error.code === "auth/missing-email")
+        toast.error("Ingrese un correo para enviar su nueva contrasena");
     }
+  };
 
+  //creasmo una funcion para llamar a el login con google
+  const sigInGoogle = async()=>{
+    try {
+      await signInWihtGoogle()
+      isAuth()
+      navigateUser('/home')
+    } catch (error) {
+      toast.error(error.message)
+    }
   }
 
   //todo creamos un useeffect para la llamada de errores
@@ -105,19 +116,32 @@ const LoginComponent = () => {
         {/* {toast.error(errors?.password?.message)} */}
       </div>
       <div className="d-flex justify-content-center align-items-center m-2">
-        <Link className="text-dark h5" onClick={handleResetPassword}>Forgot password?</Link>
+        <Link className="text-primary h6" onClick={handleResetPassword}>
+          Forgot password?
+        </Link>
       </div>
       <div className="d-flex justify-content-evenly align-items-center">
         <input
-          className="btn btn-success mt-2 w-25"
+          className="btn btn-light text-primary border-primary mt-2 w-50"
           type="submit"
-          value="Submite"
+          value="LogIn"
         />
-        <Link to={"/register"} className="btn btn-success mt-2 w-25">
+      </div>
+      <div className="d-flex justify-content-evenly align-items-center">
+      <input
+          className="btn btn-light text-danger border-danger mt-2 w-50"
+          type="submit"
+          value="LogIn with Google"
+          onClick={ sigInGoogle }
+        />
+      </div>
+      <div className="d-flex justify-content-evenly align-items-center">
+        <Link to={"/register"} className="btn btn-light text-primary border-primary mt-2 w-50">
           Register
         </Link>
       </div>
-      <ToastContainer autoClose={2000}/>
+
+      <ToastContainer autoClose={2000} />
     </form>
   );
 };

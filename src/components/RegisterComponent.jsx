@@ -110,13 +110,16 @@ const RegisterComponent = () => {
         <label htmlFor="floatingPassword">Password</label>
         {/* { errors?.password?.message } */}
       </div>
+            
       <div className="d-flex justify-content-evenly align-items-center">
         <input
-          className="btn btn-success mt-1 w-25"
+          className="btn btn-light text-primary border-primary mt-2 w-50"
           type="submit"
-          value="Submite"
+          value="Register"
         />
-        <Link to={"/login"} className="btn btn-success mt-1 w-25">
+      </div>
+      <div className="d-flex justify-content-evenly align-items-center">
+      <Link to={"/login"} className="btn btn-light text-primary border-primary mt-2 w-50">
           Login
         </Link>
       </div>
