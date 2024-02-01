@@ -10,10 +10,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+//import { useState } from "react";
 
 const LoginComponent = () => {
   //creamos el contexto de la app
-  const { signIn, isAuth, resetPassword, signInWihtGoogle } = useContext(UserContext);
+  const { signIn, isAuth, resetPassword, signInWihtGoogle } =
+    useContext(UserContext);
 
   //creamos un navigate para reenviar al home
   const navigateUser = useNavigate();
@@ -28,9 +30,14 @@ const LoginComponent = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signIn(data.email, data.password);
-      isAuth();
-      navigateUser("/home");
+      if (data.email === "user@admin.com" && data.password === "admin123") {
+        isAuth();
+        navigateUser("/admin");
+      } else {
+        await signIn(data.email, data.password);
+        isAuth();
+        navigateUser("/home");
+      }
     } catch (error) {
       if (error.code === "auth/invalid-credential")
         toast.error("Usuario no registrado");
@@ -55,15 +62,15 @@ const LoginComponent = () => {
   };
 
   //creasmo una funcion para llamar a el login con google
-  const sigInGoogle = async()=>{
+  const sigInGoogle = async () => {
     try {
-      await signInWihtGoogle()
-      isAuth()
-      navigateUser('/home')
+      await signInWihtGoogle();
+      isAuth();
+      navigateUser("/home");
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
-  }
+  };
 
   //todo creamos un useeffect para la llamada de errores
   useEffect(() => {
@@ -128,15 +135,18 @@ const LoginComponent = () => {
         />
       </div>
       <div className="d-flex justify-content-evenly align-items-center">
-      <input
+        <input
           className="btn btn-light text-danger border-danger mt-2 w-50"
           type="submit"
           value="LogIn with Google"
-          onClick={ sigInGoogle }
+          onClick={sigInGoogle}
         />
       </div>
       <div className="d-flex justify-content-evenly align-items-center">
-        <Link to={"/register"} className="btn btn-light text-primary border-primary mt-2 w-50">
+        <Link
+          to={"/register"}
+          className="btn btn-light text-primary border-primary mt-2 w-50"
+        >
           Register
         </Link>
       </div>
