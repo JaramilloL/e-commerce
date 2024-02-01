@@ -4,6 +4,7 @@ import Register from "../pages/Register";
 import Home from "../pages/Home";
 import Shoping from "../pages/Shoping";
 import Card from "../pages/Card";
+import AddProductAdmin from "../pages/AddProductAdmin";
 // en este archivo se trabajajaran las rutas de la app
 
 export const routes = createBrowserRouter([
@@ -26,6 +27,10 @@ export const routes = createBrowserRouter([
     {
         path: '/card',
         element: <Card/>
+    },
+    {
+        path: '/admin',
+        element: <AddProductAdmin/>
     },
     {
         path: '/*',
