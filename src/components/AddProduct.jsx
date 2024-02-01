@@ -46,10 +46,10 @@ const AddProduct = () => {
     const description = getValues('description');
     const price = getValues('price');
     const image = getValues('image');
-    const available = getValues('acailable');
+    const available = getValues('available');
 
    try {
-    const getProduct = await addDoc(collection(bd, 'e-commerce'), {
+    const getProduct = await addDoc(collection(bd, "e-commerce"), {
         name: name,
         description: description,
         price: price,
