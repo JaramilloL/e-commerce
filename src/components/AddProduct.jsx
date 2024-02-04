@@ -56,6 +56,7 @@ const AddProduct = () => {
     const image = getValues("image");
     const available = getValues("available");
 
+   if(name && description && price && image && available) {
     try {
       const getProduct = await addDoc(collection(bd, "e-commerce"), {
         name: name,
@@ -64,11 +65,14 @@ const AddProduct = () => {
         image: image,
         available: available,
       });
-      console.log("rhis is id: " + getProduct.id);
+      console.log("this is id: " + getProduct.id);
       toast.success("Registro creado correctamente");
     } catch (error) {
       console.log(error);
     }
+   }else{
+    toast.error('llene los campos requeridos por favor');
+   }
   };
   //usamos el estado paea traer si est o no autorizado
   const { state, notAuth } = useContext(UserContext);
