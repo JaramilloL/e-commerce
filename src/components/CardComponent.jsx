@@ -24,10 +24,10 @@ const CardComponent = () => {
   }, []);
 
   return (
-    <div>
+    <div className="row">
     {
       dataDoc ? dataDoc.map( listDoc => (
-        <div className="card w-25" key={listDoc.id}>
+        <div className="card w-25 col-12 col-8 col-6 col-3 col m-1" key={listDoc.id}>
       <img src={listDoc.image} className="card-img-top" alt={listDoc.name} />
       <div className="card-body">
         <h5 className="card-title">{listDoc.name}</h5>

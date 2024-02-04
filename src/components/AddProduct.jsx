@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { bd } from "../firebase/firebaseConfig";
 import { UserContext } from "../context/UserContext";
 import { Navigate, Link } from "react-router-dom";
+import FormProduct from "./FormProduct";
 
 const AddProduct = () => {
   const {
@@ -87,105 +88,7 @@ const AddProduct = () => {
           <div className="d-flex justify-content-end align-item-end">
             <button className="btn btn-close mt-2" onClick={notAuth}></button>
           </div>
-
-          <form
-            className="form-control w-50 m-auto mt-5 text-center"
-            onSubmit={onSubmite}
-          >
-            <label htmlFor="inputName" className="form-label">
-              Name
-            </label>
-            <input
-              type="text"
-              id="inputName"
-              className="form-control"
-              aria-describedby="passwordHelpBlock"
-              name="nameProduct"
-              {...register("nameProduct", {
-                required: {
-                  value: true,
-                  message: "nombre es requerido",
-                },
-              })}
-            ></input>
-
-            <label htmlFor="inputDescrfiption" className="form-label">
-              Description
-            </label>
-            <textarea
-              type="text"
-              id="inputDescrfiption"
-              className="form-control"
-              aria-describedby="passwordHelpBlock"
-              name="description"
-              {...register("description", {
-                required: {
-                  value: true,
-                  message: "Descripcion es requerida",
-                },
-              })}
-            ></textarea>
-
-            <label htmlFor="inputPrice" className="form-label">
-              Price
-            </label>
-            <input
-              type="number"
-              id="inputPrice"
-              className="form-control"
-              aria-describedby="passwordHelpBlock"
-              name="price"
-              {...register("price", {
-                required: {
-                  value: true,
-                  message: "precio es requerido",
-                },
-              })}
-            ></input>
-
-            <label htmlFor="inputImage" className="form-label">
-              Image
-            </label>
-            <input
-              type="text"
-              id="inputImage"
-              className="form-control"
-              aria-describedby="passwordHelpBlock"
-              name="image"
-              {...register("image", {
-                required: {
-                  value: true,
-                  message: "imagen es requerida",
-                },
-              })}
-            ></input>
-
-            <label htmlFor="inputAvailable" className="form-label">
-              Available
-            </label>
-            <div className="d-flex justify-content-center align-content-center align-items-center">
-              <input
-                type="checkbox"
-                id="inputAvailable"
-                className="form-control form-check-input border-primary"
-                aria-describedby="passwordHelpBlock"
-                name="available"
-                {...register("available", {
-                  required: {
-                    message: "La exisencia es requerida",
-                  },
-                })}
-              ></input>
-            </div>
-            <div className="d-flex justify-content-center align-content-center align-items-center">
-              <input
-                type="submit"
-                value="Enter"
-                className="btn btn-light text-success border-success m-3"
-                onClick={createProduct}
-              />
-            </div>
-          </form>
+          <FormProduct onSubmite={onSubmite} register={register} createProduct={createProduct}/>
           <ToastContainer autoClose={4000} />
         </div>
       ) : (

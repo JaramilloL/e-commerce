@@ -9,11 +9,12 @@ const HomeComponent = () => {
 
   return (
     <div>
-    HomeComponent
     <div className="d-flex justify-content-end align-content-end align-items-end m-3">
       <button onClick={notAuth} className="btn btn-close"></button>
     </div>
+      <div className='container'>
       <CardComponent/>
+      </div>
       
     </div>
   )
