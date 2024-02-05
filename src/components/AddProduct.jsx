@@ -2,7 +2,7 @@
 
 //vamos a usar react-hook-form para la validacion de los campos
 import { addDoc, collection } from "firebase/firestore";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import { bd } from "../firebase/firebaseConfig";
@@ -23,31 +23,6 @@ const AddProduct = () => {
     console.log(data);
     reset();
   });
-
-  //controlamos los errores desde que se inicia la pagina
-  useEffect(() => {
-    if (errors.nameProduct) {
-      toast.error(errors.nameProduct.message);
-    }
-    if (errors.description) {
-      toast.error(errors.description.message);
-    }
-    if (errors.price) {
-      toast.error(errors.price.message);
-    }
-    if (errors.image) {
-      toast.error(errors.image.message);
-    }
-    if (errors.available) {
-      toast.error(errors.available.message);
-    }
-  }, [
-    errors.nameProduct,
-    errors.description,
-    errors.price,
-    errors.image,
-    errors.available,
-  ]);
 
   //creamos una funcion para enviar los datos del formulario
   const createProduct = async () => {
@@ -88,7 +63,7 @@ const AddProduct = () => {
           <div className="d-flex justify-content-end align-item-end">
             <button className="btn btn-close mt-2" onClick={notAuth}></button>
           </div>
-          <FormProduct onSubmite={onSubmite} register={register} createProduct={createProduct}/>
+          <FormProduct onSubmite={onSubmite} register={register} createProduct={createProduct} errors={errors}/>
           <ToastContainer autoClose={4000} />
         </div>
       ) : (

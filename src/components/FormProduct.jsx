@@ -1,7 +1,7 @@
 // en este componente se va a desarrollar la parte visual del formulario
 import PropTypes from 'prop-types'
 
-const FormProduct = ( { onSubmite, register, createProduct } ) => {
+const FormProduct = ( { onSubmite, register, createProduct, errors } ) => {
   return (
     <>
         <form
@@ -24,6 +24,7 @@ const FormProduct = ( { onSubmite, register, createProduct } ) => {
                 },
               })}
             ></input>
+           <p className='text-danger'> { errors?.nameProduct?.message }</p>
 
             <label htmlFor="inputDescrfiption" className="form-label">
               Description
@@ -41,6 +42,8 @@ const FormProduct = ( { onSubmite, register, createProduct } ) => {
                 },
               })}
             ></textarea>
+           <p className='text-danger'> { errors?.description?.message }</p>
+
 
             <label htmlFor="inputPrice" className="form-label">
               Price
@@ -58,6 +61,8 @@ const FormProduct = ( { onSubmite, register, createProduct } ) => {
                 },
               })}
             ></input>
+           <p className='text-danger'> { errors?.price?.message }</p>
+
 
             <label htmlFor="inputImage" className="form-label">
               Image
@@ -75,6 +80,8 @@ const FormProduct = ( { onSubmite, register, createProduct } ) => {
                 },
               })}
             ></input>
+           <p className='text-danger'> { errors?.image?.message }</p>
+
 
             <label htmlFor="inputAvailable" className="form-label">
               Available
@@ -93,6 +100,8 @@ const FormProduct = ( { onSubmite, register, createProduct } ) => {
                   },
                 })}
               ></input>
+           <p className='text-danger'> { errors?.available?.message }</p>
+
             </div>
             <div className="d-flex justify-content-center align-content-center align-items-center">
               <input
@@ -113,4 +122,5 @@ FormProduct.propTypes = {
     onSubmite: PropTypes.func,
     register: PropTypes.func,
     createProduct: PropTypes.func,
+    errors: PropTypes.string,
 }
